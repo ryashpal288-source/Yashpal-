@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "ChatInteraction": {
+      "title": "ChatInteraction",
+      "description": "Stores a single chat interaction.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "prompt": { "type": "string" },
+        "response": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "prompt", "response", "timestamp"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Stores a task to be processed.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "command": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "failed"] },
+        "result": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "command", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/chatHistory/{interactionId}": {
+      "schema": { "$ref": "ChatInteraction" },
+      "description": "User's chat history."
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": { "$ref": "Task" },
+      "description": "User's task queue."
+    }
+  }
+}
